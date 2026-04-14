@@ -28,14 +28,31 @@ def place_order(
 			"quantity": float(quantity),
 		}
 
+		logger.info(
+			"Placing futures order: symbol=%s side=%s type=%s quantity=%s",
+			order_params["symbol"],
+			order_params["side"],
+			order_params["type"],
+			order_params["quantity"],
+		)
+
 		if order_params["type"] == "MARKET":
 			response = client.futures_create_order(**order_params)
 		elif order_params["type"] == "LIMIT":
 			order_params["price"] = str(price)
 			order_params["timeInForce"] = "GTC"
+			logger.info("Limit order price=%s timeInForce=%s", order_params["price"], order_params["timeInForce"])
 			response = client.futures_create_order(**order_params)
 		else:
 			raise ValueError("Unsupported order type. Use MARKET or LIMIT.")
+
+		logger.info(
+			"Order API response: orderId=%s status=%s executedQty=%s avgPrice=%s",
+			response.get("orderId"),
+			response.get("status"),
+			response.get("executedQty"),
+			response.get("avgPrice"),
+		)
 
 		return {
 			"success": True,
