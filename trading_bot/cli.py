@@ -38,7 +38,23 @@ def main(symbol: str, side: str, order_type: str, quantity: float, price: float)
 			message = error.get("message", "Unknown error")
 			raise click.ClickException(message)
 
-		click.echo("Order submitted.")
+		request = result.get("request", {})
+		order = result.get("order", {})
+
+		click.echo("Order Summary:")
+		click.echo(f"Symbol: {request.get('symbol')}")
+		click.echo(f"Side: {request.get('side')}")
+		click.echo(f"Type: {request.get('type')}")
+		click.echo(f"Quantity: {request.get('quantity')}")
+		click.echo(f"Price: {request.get('price') or 'N/A'}")
+		click.echo("")
+		click.echo("Order Response:")
+		click.echo(f"Order ID: {order.get('order_id')}")
+		click.echo(f"Status: {order.get('status')}")
+		click.echo(f"Executed Quantity: {order.get('executed_qty')}")
+		click.echo(f"Average Price: {order.get('avg_price')}")
+		click.echo("")
+		click.echo("Order placed successfully!")
 	except ValueError as exc:
 		raise click.ClickException(str(exc)) from exc
 
