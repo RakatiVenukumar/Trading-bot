@@ -12,16 +12,17 @@ Python CLI-based trading bot for Binance USDT-M Futures Testnet.
 
 ## Project Structure
 
-trading_bot/
-	bot/
-		__init__.py
-		client.py
-		orders.py
-		validators.py
-		logging_config.py
-	cli.py
-	requirements.txt
-	README.md
+bot/
+  __init__.py
+  client.py
+  orders.py
+  validators.py
+  logging_config.py
+cli.py
+requirements.txt
+README.md
+.env
+.gitignore
 
 ## Setup Instructions
 
